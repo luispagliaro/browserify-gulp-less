@@ -6,7 +6,6 @@ var gulp = require('gulp'),
     source = require('vinyl-source-stream'),
     browserify = require('browserify'),
     less = require('gulp-less'),
-    gulpif = require('gulp-if'),
     // To load plugins when needed
     $ = require('gulp-load-plugins')({
         lazy: true
@@ -82,8 +81,8 @@ gulp.task('minify', ['inject'], function() {
         .src(config.index)
         .pipe($.plumber())
         .pipe($.useref())
-        .pipe(gulpif('**/*.css', $.csso()))
-        .pipe(gulpif('**/*.js', $.uglify()))
+        .pipe($.if('**/*.css', $.csso()))
+        .pipe($.if('**/*.js', $.uglify()))
         .pipe(gulp.dest('./src/build'));
 });
 

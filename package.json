@@ -1,0 +1,48 @@
+{
+  "name": "browserify-gulp-less",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "browserify": "^12.0.1",
+    "gulp": "^3.9.0"
+  },
+  "devDependencies": {
+    "del": "^2.2.0",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-csso": "^1.0.1",
+    "gulp-filter": "^3.0.1",
+    "gulp-if": "^2.0.0",
+    "gulp-inject": "^3.0.0",
+    "gulp-jscs": "^3.0.2",
+    "gulp-jshint": "^2.0.0",
+    "gulp-less": "^3.0.5",
+    "gulp-load-plugins": "^1.1.0",
+    "gulp-plumber": "^1.0.1",
+    "gulp-print": "^2.0.1",
+    "gulp-uglify": "^1.5.1",
+    "gulp-useref": "^3.0.4",
+    "gulp-util": "^3.0.7",
+    "gulp-wiredep": "0.0.0",
+    "jquery": "^2.1.4",
+    "jshint": "^2.8.0",
+    "jshint-stylish": "^2.1.0",
+    "less": "^2.5.3",
+    "vinyl-source-stream": "^1.1.0",
+    "wiredep": "^3.0.0",
+    "yargs": "^3.31.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luispagliaro/browserify-gulp-less.git"
+  },
+  "author": "Luis Pagliaro",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/luispagliaro/browserify-gulp-less/issues"
+  },
+  "homepage": "https://github.com/luispagliaro/browserify-gulp-less#readme"
+}

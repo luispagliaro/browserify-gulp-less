@@ -40,7 +40,7 @@ gulp.task('check-js', function() {
         .src(config.alljs)
         .pipe($.if(args.verbose, $.print()))
         // Executes jscs (code style linter/formatter).
-        //.pipe($.jscs())
+        .pipe($.jscs())
         // Executes jshint (tool to detect errors and potential problems in JavaScript code).
         .pipe($.jshint('./.jshintrc'))
         // Logs errors using the stylish reporter.

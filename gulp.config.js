@@ -8,7 +8,8 @@ module.exports = function() {
         less: [
             './src/css/style.less'
         ],
-        allless: './src/css/*.less'
+        allless: './src/css/*.less',
+        alljs: './src/js/**/*.js'
     };
 
     return config;

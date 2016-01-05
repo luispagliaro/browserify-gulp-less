@@ -15,7 +15,7 @@ var gulp = require('gulp'),
     });
 
 // Compiles browserify modules.
-gulp.task('browserify', function() {
+gulp.task('browserify', ['check-js'], function() {
     return browserify({
             // Sets the path where the main JS is.
             entries: [config.js + 'app.js']
@@ -31,12 +31,12 @@ gulp.task('browserify', function() {
 });
 
 // Analizes JS files.
-gulp.task('vetjs', ['browserify'], function() {
+gulp.task('check-js', function() {
     log('Analyzing source with JSHint and JSCS');
 
     return gulp
         // Selects the source file to use.
-        .src(config.temp + 'app.bundled.js')
+        .src(config.alljs)
         .pipe($.if(args.verbose, $.print()))
         // Executes jscs (code style linter/formatter).
         //.pipe($.jscs())
@@ -51,7 +51,7 @@ gulp.task('vetjs', ['browserify'], function() {
 });
 
 // Compiles LESS files to CSS.
-gulp.task('style', function() {
+gulp.task('compile-css', function() {
     log('Compiling Less --> CSS');
 
     return gulp
@@ -76,11 +76,21 @@ gulp.task('clean-styles', function(done) {
 
 // Watches for changes in LESS files.
 gulp.task('less-watcher', function() {
-    gulp.watch([config.allless], ['style']);
+    gulp.watch([config.allless], ['compile-css']);
 });
 
-// Wires up CSS and JS into HTML.
-gulp.task('wiredep', function() {
+// Watches for changes in JS files.
+gulp.task('js-watcher', function() {
+    gulp.watch([config.alljs], ['check-js']);
+});
+
+// Default watch task for CSS and JS files.
+gulp.task('watch', ['less-watcher', 'js-watcher'], function() {
+    log('Watching for changes in CSS and JS files');
+});
+
+// Injects JS calls into HTML.
+gulp.task('wiredep', ['browserify'], function() {
     log('Wire up css and js into the html');
 
     var wiredep = require('wiredep').stream;
@@ -94,8 +104,9 @@ gulp.task('wiredep', function() {
         .pipe(gulp.dest('./'));
 });
 
-gulp.task('inject', ['wiredep', 'style'], function() {
-    log('Wire up the app css into the html, and call wiredep ');
+// Injects CSS calls into HTML.
+gulp.task('inject', ['wiredep', 'compile-css'], function() {
+    log('Wire up the app css into the html, and call wiredep');
 
     return gulp
         // Selects the HTML file to use.
@@ -106,8 +117,8 @@ gulp.task('inject', ['wiredep', 'style'], function() {
         .pipe(gulp.dest('./'));
 });
 
-// Minifies CSS and JS
-gulp.task('minify', ['inject'], function() {
+// Minifies CSS and JS and builds the app
+gulp.task('build', ['inject'], function() {
     return gulp
         // Selects the HTML file to use.
         .src(config.index)

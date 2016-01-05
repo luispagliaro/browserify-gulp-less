@@ -7,6 +7,7 @@ var gulp = require('gulp'),
     // Allows to to use conventional streams for gulp.
     source = require('vinyl-source-stream'),
     browserify = require('browserify'),
+    hbsfy = require('hbsfy'),
     less = require('gulp-less'),
     // To load plugins when needed
     $ = require('gulp-load-plugins')({
@@ -19,6 +20,8 @@ gulp.task('browserify', function() {
             // Sets the path where the main JS is.
             entries: [config.js + 'app.js']
         })
+        // Applies hbsfy to include templates.
+        .transform(hbsfy)
         // Creates the bundled JS.
         .bundle()
         // Converts the bundled JS into a gulp stream.

@@ -7,6 +7,7 @@ var gulp = require('gulp'),
     // Allows to to use conventional streams for gulp.
     source = require('vinyl-source-stream'),
     browserify = require('browserify'),
+    // Compiles Handlebars templates to plain Javascript
     hbsfy = require('hbsfy'),
     less = require('gulp-less'),
     // To load plugins when needed

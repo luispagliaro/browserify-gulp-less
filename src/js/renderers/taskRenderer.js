@@ -3,7 +3,7 @@
 // Variable privada. Accesible solamente en este contexto, no es visible desde afuera de este archivo por no usar exports
 // Browserify utiliza require para cargar jquery, instalado via npm.
 var $ = require('jquery'),
-    taskTemplate = require('../../templates/tasks.hbs');
+    taskTemplate = require('../../templates/task.hbs');
 
 // Función privada. Accesible solamente en este contexto, no es visible desde afuera de este archivo por no usar exports
 function _renderTask(task) {

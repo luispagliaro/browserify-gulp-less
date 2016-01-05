@@ -22,7 +22,7 @@ exports.save = function() {
     taskData.save(tasks);
 };
 
-exports.remove = function() {
+exports.remove = function(clickEvent) {
     $(clickEvent.target).closest('.task').remove();
 };
 

@@ -9,7 +9,8 @@ module.exports = function() {
             './src/css/style.less'
         ],
         allless: './src/css/*.less',
-        alljs: './src/js/**/*.js'
+        alljs: './src/js/**/*.js',
+        templates: './src/templates/*.hbs'
     };
 
     return config;

@@ -75,18 +75,35 @@ gulp.task('clean-styles', function(done) {
     clean(config.temp + '**/*.css', done);
 });
 
+// Reloads index.html on HTML, CSS or JS files changes
+gulp.task('reload', function() {
+    return gulp
+        .src([config.index])
+        .pipe($.connect.reload());
+});
+
 // Watches for changes in LESS files.
 gulp.task('less-watcher', function() {
-    gulp.watch([config.allless], ['compile-css']);
+    gulp.watch([config.allless], ['compile-css', 'reload']);
 });
 
 // Watches for changes in JS files.
 gulp.task('js-watcher', function() {
-    gulp.watch([config.alljs], ['check-js']);
+    gulp.watch([config.alljs], ['check-js', 'reload']);
+});
+
+// Watches for changes in HTML files.
+gulp.task('html-watcher', function() {
+    gulp.watch([config.index], ['reload']);
+});
+
+// Watches for changes in HBS files.
+gulp.task('templates-watcher', function() {
+    gulp.watch([config.templates], $.sync(gulp).sync(['browserify', 'reload']));
 });
 
 // Default watch task for CSS and JS files.
-gulp.task('watch', ['less-watcher', 'js-watcher'], function() {
+gulp.task('watch', ['less-watcher', 'js-watcher', 'html-watcher', 'templates-watcher'], function() {
     log('Watching for changes in CSS and JS files');
 });
 
@@ -132,7 +149,23 @@ gulp.task('build', ['inject'], function() {
         // Filters JS files and applies uglify to minify JS.
         .pipe($.if('**/*.js', $.uglify()))
         // Saves minified files.
-        .pipe(gulp.dest('./src/build'));
+        .pipe(gulp.dest('./build'));
+});
+
+// Runs the dev server
+gulp.task('dev-server', ['inject', 'watch'], function() {
+    $.connect.server({
+        root: 'src',
+        livereload: true
+    });
+});
+
+// Runs the prod server
+gulp.task('prod-server', ['build'], function() {
+    $.connect.server({
+        root: 'build',
+        livereload: false
+    });
 });
 
 function clean(path, done) {

@@ -1,3 +1,5 @@
+'use strict';
+
 var gulp = require('gulp'),
     // yargs provides a key:value object for arguments instead of the native process.argv
     args = require('yargs').argv,
